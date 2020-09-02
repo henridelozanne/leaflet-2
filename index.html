@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leaflet 2</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+   crossorigin=""/>
+   <link rel="stylesheet" href="./styles.css">
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+  integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+  crossorigin="">
+  </script>
+
+  <style>
+    /* CUSTOMIZE LEAFLET STYLES */
+    .leaflet-popup-content {
+      margin: 10px;
+      color: white;
+    }
+
+    .leaflet-popup-content-wrapper {
+      background: black;
+    }
+
+    .leaflet-popup-tip {
+      background: black;
+    }
+
+    /* .leaflet-popup-close-button {
+      display: none;
+    } */
+  </style>
+</head>
+
+<body>
+  <h1>Leaflet - tuto youtube Eduonix Learning Solutions</h1>
+  <div id="mapid"></div>
+</body>
+
+<script>
+  // INIT MAP
+  var map = L.map('mapid').setView([48.85387273165654, 2.338714599609375], 9.9);
+
+  // LOAD TILES
+  var standardTile = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiaGVucmlkZWxvemFubmUiLCJhIjoiY2p2OXN3cXYzMGpzdjQ1bW1yM3RsMXo1ayJ9.4FNTFEq1qaN6FkYwJ8SjMQ', {
+      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+      maxZoom: 18,
+      id: 'mapbox/streets-v11',
+      tileSize: 512,
+      zoomOffset: -1,
+      accessToken: 'your.mapbox.access.token'
+  }).addTo(map);
+
+  var Stamen_Watercolor = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
+    attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    subdomains: 'abcd',
+    minZoom: 1,
+    maxZoom: 16,
+    ext: 'jpg'
+  });
+
+  // ADD TILE CONTROLS
+  L.control.layers({
+    'Standard': standardTile,
+    'Watercolors': Stamen_Watercolor,
+  }).addTo(map);
+
+  // ADD MARKER
+  // L.marker([48.77387273165654, 2.388714599609375]).bindPopup('<img src="https://via.placeholder.com/150x78" />').openPopup().addTo(map);
+
+  var markerIcon = L.icon({
+      iconUrl: 'marker.png',
+      // shadowUrl: 'leaf-shadow.png',
+
+      iconSize:     [48, 48], // size of the icon
+      shadowSize:   [50, 64], // size of the shadow
+      iconAnchor:   [24, 48], // point of the icon which will correspond to marker's location
+      shadowAnchor: [4, 62],  // the same for the shadow
+      popupAnchor:  [0, -70] // point from which the popup should open relative to the iconAnchor
+  });
+
+  var africaIcon = L.icon({
+      iconUrl: 'africa.svg',
+      // shadowUrl: 'leaf-shadow.png',
+
+      iconSize:     [38, 95], // size of the icon
+      shadowSize:   [50, 64], // size of the shadow
+      iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+      shadowAnchor: [4, 62],  // the same for the shadow
+      popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+  });
+
+  // L.marker([48.85387273165654, 2.338714599609375], {
+  //   icon: markerIcon,
+  // }).bindPopup('<img src="https://via.placeholder.com/150x78" />').addTo(map);
+
+  // L.marker([48.89387273165654, 2.318714599609375], {
+  //   icon: africaIcon,
+  // }).addTo(map);
+
+  // ADD SHAPES
+  var shapeStyle = {
+      // stroke
+      stroke: true,
+      color: 'darkgreen',
+      weight: 0.5,
+      opacity: 0.8,
+      dashArray: 0,
+      // fill
+      fill: true,
+      fillColor: 'orange',
+      fillOpacity: 0.5,
+      radius: 4500,
+      //
+      lineCap: 'round', /* bouts des lignes */
+      lineJoin: 'round', /* arrondi des angles */
+      fillRule: 'evenodd',
+      bubblingMouseEvents: true,
+      interactive: true,
+      // className: 'my-class',
+  };
+
+  // var circle = L.circle([48.85387273165654, 2.338714599609375], shapeStyle).addTo(map);
+  
+  // var polygon = L.polygon([
+  //     [48.85387273165654, 2.438714599609375],
+  //     [48.82387273165654, 2.338714599609375],
+  //     [48.85387273165654, 2.238714599609375]
+  // ], shapeStyle).addTo(map);
+  
+  
+  // POPUPS
+
+
+  // EVENTS
+  // function onMapClick(e) {
+  //   var popup = L.popup();
+  //   popup
+  //       .setLatLng(e.latlng)
+  //       .setContent("You clicked the map at " + e.latlng.toString())
+  //       .openOn(map);
+  // }
+
+  // map.on('click', onMapClick);
+
+
+  // GEOJSONS
+
+  // const geoJSON = {"type": "FeatureCollection","features": [{"type": "Feature","properties": {},"geometry": {"type": "Point","coordinates": [1.9000006103515625,48.8733528232544]}},{"type": "Feature","properties": {},"geometry": {"type": "Point","coordinates": [2.324037551879883,48.889636875713464]}},{"type": "Feature","properties": {},"geometry": {"type": "Point","coordinates": [2.3389291763305664,48.893276779272014]}},{"type": "Feature","properties": {},"geometry": {"type": "Point","coordinates": [2.3919296264648438,48.85805170891599]}},{"type": "Feature","properties": {},"geometry": {"type": "Polygon","coordinates": [[[2.270221710205078,48.83794424201479],[2.332019805908203,48.81907202982484],[2.3603439331054688,48.817715668996435],[2.3845481872558594,48.82664436993818],[2.3555374145507812,48.85285617092495],[2.3163986206054688,48.86279499007753],[2.297344207763672,48.8607622103356],[2.270221710205078,48.83794424201479]]]}},{"type": "Feature","properties": {},"geometry": {"type": "LineString","coordinates": [[2.3927879333496094,48.89474395227992],[2.3697853088378906,48.88424707449789],[2.3694419860839844,48.882102279983364],[2.3627471923828125,48.87465122643438],[2.373218536376953,48.86110101269274],[2.366180419921875,48.84709527021744]]}},{"type": "Feature","properties": {},"geometry": {"type": "Polygon","coordinates": [[[2.3263549804687496,48.87171565817035],[2.34283447265625,48.87171565817035],[2.34283447265625,48.87555444355432],[2.3263549804687496,48.87555444355432],[2.3263549804687496,48.87171565817035]]]}}]};
+
+  // const addedGeoJSON = L.geoJSON(
+  //   // data
+  //   geoJSON,
+  //   {
+  //     // fonction qui s'applique à toutes les formes
+  //     style: (feature) => shapeStyle,
+  //     // fonction qui s'applique à chaque geoJSON de type "Point"
+  //     pointToLayer: function(geoJsonPoint, latlng) {
+  //         return L.marker(latlng, {
+  //           icon: africaIcon
+  //         });
+  //     },
+  //     // fonction qui s'applique partout, possible de filtrer ensuite comme ci-dessous
+  //     onEachFeature: function(feature, layer) {
+  //       if (feature.geometry.type === 'Point') {
+  //        layer.bindPopup(feature.geometry.coordinates.join(','))
+  //       }
+  //     }
+  //   }
+  // ).addTo(map);
+
+  // // BOUNDS
+
+  // // pour centrer sur les points contenus dans un geoJSON
+  // map.fitBounds(addedGeoJSON.getBounds(), {
+  //   // rajouter du padding
+  //   padding: [80, 80]
+  // })
+
+
+  // LAYER-GROUPS/FEATURE-GROUPS
+
+  const markers = [];
+  const coordinates = [
+    [48.8733528232544, 1.9000006103515625],
+    [48.9733528232544, 2.2900006103515625],
+    [48.9733528232544, 2.1900006103515625],
+  ];
+
+
+  // EVENTS
+
+  // coordinates.forEach((coord) => {
+  //   const marker = L.marker(coord)
+  //   marker.on('mousemove', (e) => {
+  //     e.target.setIcon(africaIcon);
+  //   });
+  //   marker.on('mouseout', (e) => {
+  //     e.target.setIcon(markerIcon);
+  //   })
+  //   markers.push(marker);
+  // });
+
+  // const layerGroup = L.featureGroup(markers).addTo(map);
+
+  // map.fitBounds(layerGroup.getBounds(), {
+  //   padding: [30, 30]
+  // });
+
+
+  // DYNAMIC
+
+  let currentIndex = 0;
+
+  function changePoint() {
+    if (currentIndex < 2) currentIndex += 1
+    else currentIndex = 0
+    const marker = L.marker(coordinates[currentIndex]);
+    // console.log('getLatLng', marker.getLatLng());
+    const latLngs = [marker.getLatLng().lat, marker.getLatLng().lng];
+    const markerBounds = L.latLngBounds(latLngs);
+    map.fitBounds(markerBounds);
+    // const featureGroup = L.featureGroup(markerBounds).addTo(map);
+    // map.fitBounds(featureGroup.getBounds());
+  }
+
+  setInterval(() => {
+    changePoint()
+  }, 1000);
+
+</script>
+
+</html>
